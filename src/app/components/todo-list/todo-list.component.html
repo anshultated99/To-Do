@@ -1,0 +1,13 @@
+<mdc-card class="card">
+    <mdc-card-primary-action>
+      <div class="card-primary">
+        <h2 class="card-title" mdcHeadline6>{{ title }}</h2>
+      </div>
+    </mdc-card-primary-action>
+    <mdc-card-actions>
+      <mdc-card-action-icons>
+        <button mdcIconButton mdcCardAction="icon" class="remove" icon="cancel" (click)="toDoRemoved(title)"></button>
+        <button mdcIconButton mdcCardAction="icon" class="done" icon="done" (click)="toDoFinished(title)"></button>
+      </mdc-card-action-icons>
+    </mdc-card-actions>
+  </mdc-card>
