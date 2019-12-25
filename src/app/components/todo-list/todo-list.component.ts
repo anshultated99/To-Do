@@ -8,6 +8,8 @@ import { EventEmitter } from '@angular/core';
 })
 export class TodoListComponent implements OnInit {
   @Input() title: string;
+  @Input() id: string;
+  @Input() isComplete: boolean;
   
   @Output() onToDoRemoved: EventEmitter<any> = new EventEmitter();
   @Output() onToDoFinished: EventEmitter<any> = new EventEmitter();
@@ -18,8 +20,9 @@ export class TodoListComponent implements OnInit {
     this.onToDoRemoved.emit(title);
   }
 
-  toDoFinished(title: string){
-    this.onToDoFinished.emit(title);
+  updateToDo(id: string, isComplete: boolean){
+    console.log(`${isComplete}`);  
+    this.onToDoFinished.emit({id: id, isComplete: isComplete});
   }
 
   ngOnInit() {

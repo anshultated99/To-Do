@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import todoItem from '../constants';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -17,14 +17,31 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) { }
   addToDo(todo: string){
     console.log(`ToDo Added: ${todo}`);
+    const params = new HttpParams({
+      fromObject: {
+        title: todo
+      }
+    });
+    this.http.post(`${}/add-task`,params).subscribe(res => this.getTasks());
   }
 
-  removeToDo(todo: string){
-    console.log(`ToDo Removed: ${todo}`);
+  removeToDo(id: string){
+    console.log(`ToDo Removed: ${id}`);
+    this.http.get(`${}/remove-task/${id}`).subscribe(res => this.getTasks());
   }
 
-  finishToDo(todo: string){
-    console.log(`ToDo Finished: ${todo}`);
+  finishToDo(data){
+    let id= data["id"];
+    let isComplete = data["isComplete"];
+    console.log(`ToDo Finished: ${id}`);
+
+    let val = isComplete ? false : true;
+    console.log(String(val));
+    this.http.post(`${}/update-task/${id}`, {status : val}).subscribe(res =>{
+      console.log(res);
+      this.getTasks();
+      
+    })
     
   }
 
@@ -34,6 +51,14 @@ export class HomeComponent implements OnInit {
 
   getTasks(){
     this.isLoading= true;
-
+    this.http.get(`${}/get-tasks`).subscribe(res =>{
+      console.log(res);
+      if(res == "NULL"){
+        this.noDataPresent = true;
+        this.isLoading = false;
+      }else{
+        this.list = res;
+      }
+    });
   }
 }

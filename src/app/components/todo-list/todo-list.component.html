@@ -6,8 +6,9 @@
     </mdc-card-primary-action>
     <mdc-card-actions>
       <mdc-card-action-icons>
-        <button mdcIconButton mdcCardAction="icon" class="remove" icon="cancel" (click)="toDoRemoved(title)"></button>
-        <button mdcIconButton mdcCardAction="icon" class="done" icon="done" (click)="toDoFinished(title)"></button>
+        <button mdcIconButton mdcCardAction="icon" class="remove" icon="cancel" (click)="toDoRemoved(id)"></button>
+        <button mdcIconButton mdcCardAction="icon" class="done" icon="done" (click)="updateToDo(id, isComplete)" *ngIf="isComplete === false"></button>
+        <button mdcIconButton mdcCardAction="icon" class="undo" icon="undo" (click)="updateToDo(id, isComplete)" *ngIf="isComplete === true"></button>
       </mdc-card-action-icons>
     </mdc-card-actions>
   </mdc-card>
