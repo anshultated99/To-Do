@@ -68,7 +68,7 @@ app.post("/update-task/:id", (request,response) =>{
         response.json(`Task Updated Successfully with id ${id}`);
     })
     .catch(err =>{
-        response.json(`Errir updating task! ${err}`);
+        response.json(`Error updating task! ${err}`);
     });
 });
 

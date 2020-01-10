@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import todoItem from '../constants';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+const BASE_URL = 'https://to-do-5eb05.web.app/api';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,7 +14,7 @@ export class HomeComponent implements OnInit {
   noDataPresent: boolean = false;
   isLoading: boolean = false;
   
-  list: todoItem[]=[{title: "Buy Milk"},{title: "Bread"}, {title: "Buy Bread"}];
+  list: todoItem[]=[];
 
   constructor(private http: HttpClient) { }
   addToDo(todo: string){
@@ -22,12 +24,12 @@ export class HomeComponent implements OnInit {
         title: todo
       }
     });
-    this.http.post(`${}/add-task`,params).subscribe(res => this.getTasks());
+    this.http.post(`${BASE_URL}/add-task`,params).subscribe(res => this.getTasks());
   }
 
   removeToDo(id: string){
     console.log(`ToDo Removed: ${id}`);
-    this.http.get(`${}/remove-task/${id}`).subscribe(res => this.getTasks());
+    this.http.get(`${BASE_URL}/remove-task/${id}`).subscribe(res => this.getTasks());
   }
 
   finishToDo(data){
@@ -37,7 +39,7 @@ export class HomeComponent implements OnInit {
 
     let val = isComplete ? false : true;
     console.log(String(val));
-    this.http.post(`${}/update-task/${id}`, {status : val}).subscribe(res =>{
+    this.http.post(`${BASE_URL}/update-task/${id}`, {status : val}).subscribe(res =>{
       console.log(res);
       this.getTasks();
       
@@ -51,7 +53,7 @@ export class HomeComponent implements OnInit {
 
   getTasks(){
     this.isLoading= true;
-    this.http.get(`${}/get-tasks`).subscribe(res =>{
+    this.http.get(`${BASE_URL}/get-tasks`).subscribe(res =>{
       console.log(res);
       if(res == "NULL"){
         this.noDataPresent = true;
